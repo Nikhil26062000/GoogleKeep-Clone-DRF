@@ -1,0 +1,23 @@
+# Virtual environment
+.venv
+
+# Compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# SQLite database
+db.sqlite3
+
+# Migrations (optional)
+mainapp/migrations/
+
+# Environment variables
+.env
+
+# IDE/Editor configuration
+.vscode/
+
+# System-specific files
+.DS_Store
+Thumbs.db
