@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from mainapp.serializers import *
 from rest_framework import status
 from mainapp.models import CheckList  # Correct import
+from django.http import Http404
 
 # Create your views here.
 @api_view()
@@ -37,7 +38,22 @@ class AllListAPIView(APIView):
 class ListAPIView(APIView):
     serializer_class = AllListSerializer
     
+    def get_obj(self,pk):
+        try:
+            return CheckList.objects.get(pk=pk)
+        except CheckList.DoesNotExist:
+            raise Http404
+            
     def get(self, request, pk, format=None):
-        data = CheckList.objects.get(pk=pk)
+        data = self.get_obj(pk)
         serializer = self.serializer_class(data)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, pk, format=None):
+        data = self.get_obj(pk)
+        serializer = self.serializer_class(data,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            serialized_data = serializer.data
+            return Response(serialized_data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
