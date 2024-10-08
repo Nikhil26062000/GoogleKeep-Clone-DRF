@@ -5,5 +5,6 @@ from mainapp.views import *
 urlpatterns = [
     path("",Test.as_view()),
     path("fun",hello),
+    path("api/all",AllListAPIView.as_view())
     
 ]

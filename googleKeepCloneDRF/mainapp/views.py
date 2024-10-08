@@ -1,7 +1,9 @@
+from tkinter.tix import CheckList
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from mainapp.serializers import *
 
 """
 1. create a virual env
@@ -37,3 +39,11 @@ def hello(request):
 class Test(APIView):
     def get(self, request,format=None):
         return Response({'name':'Nikhil Raj'})
+    
+    
+class AllListAPIView(APIView):
+    def get(self, request,format=None):
+        data = CheckList.objects.all()
+        serializer = AllListSerializer(data,many=True)
+        serialized_data = serializer.data
+        return Response(serialized_data)
