@@ -11,4 +11,4 @@ urlpatterns = [
     path("api/list-item/all/",checkListItem_ALLAPIView.as_view()),
     path("api/list-item/<int:pk>/",CheckListItem_APIView.as_view())
     
-]
+] 
